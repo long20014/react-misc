@@ -215,7 +215,7 @@ class PuzzleGrid extends React.Component {
           updateStop={this.subscribeWinning} 
           emitTime={this.getEmittedTime}
         />
-        <button onClick={this.announceWinning}>Win</button>
+        {/* <button onClick={this.announceWinning}>Win</button> */}
       </div>
     );
   }  
