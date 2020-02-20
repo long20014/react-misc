@@ -45,7 +45,7 @@ class PuzzleGrid extends React.Component {
     console.log('get time');     
     const winningInfo = {
       playedTime: emittedTime,
-      playerName: 'long',
+      playerName: 'Unknown player',
       level: this.props.gameLevel.level
     }
     this.props.getWinningInfo(winningInfo)

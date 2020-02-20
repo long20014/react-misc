@@ -13,7 +13,7 @@ import LoginPageRoute from 'pages/login-page/login-page-route';
 const GLOBAL_GUARDS = [requireLogin];
 const MainRouter = () => {
   return (
-    <Router history={history}>
+    <Router basename={`${process.env.PUBLIC_URL}/`} history={history}>
       <Nav />
       <GuardProvider guards={GLOBAL_GUARDS} loading="Loading..." >
         <Switch>
