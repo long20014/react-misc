@@ -1,0 +1,52 @@
+import React from 'react';
+import './nav.scss';
+import { Link } from 'react-router-dom';
+import history from 'services/history.service';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutAction } from 'actions/auth-action';
+
+class Nav extends React.Component {
+  constructor(props) {
+    super(props);    
+    this.logout = this.logout.bind(this);
+  } 
+
+  logout() {    
+    this.props.logoutAction();        
+    history.push('/login')
+  };
+
+  render() {
+    const isLoggedIn = this.props.isLoggedIn;    
+    return (
+      <div className="component-wrapper">
+        <div className="nav">
+          <h3>Logo</h3>
+          <ul className="nav-links">
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/clock">Clock</Link>
+            </li>
+            <li>
+              <Link to="/puzzle">Puzzle</Link>
+            </li>
+          </ul>
+          {isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}
+        </div>
+      </div>
+    );
+  }
+}
+
+Nav.propsType = {
+  logoutAction: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn
+})
+
+export default connect(mapStateToProps, { logoutAction })(Nav);

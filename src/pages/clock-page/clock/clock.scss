@@ -1,0 +1,78 @@
+.clock-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  width: 400px;
+}
+
+.clock {
+  position: relative;
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+.hand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: left;  
+}
+
+.hour-hand {  
+  height: 4px;
+  width: 140px;
+  background: white;
+  animation: hour-hand-rotate infinite 60*60*24s linear;
+}
+
+.minute-hand {    
+  height: 2px;
+  width: 160px;
+  background: white;
+  animation: minute-hand-rotate infinite 60*60s linear;
+}
+
+.second-hand {  
+  height: 1px;
+  width: 160px;
+  background: white;
+  animation: second-hand-rotate infinite 60*1s linear;
+}
+
+.timer {
+  margin-top: 10px;
+}
+
+// @mixin getTime($hour, $minute, $second) {
+//   @keyframes hour-hand-rotate {
+//     from {
+//       transform: rotate(#{($hour % 12) * 30 - 90}deg);
+//     }
+//     to {
+//       transform: rotate(#{$hour * 30 + 270}deg);
+//     }
+//   }
+
+//   @keyframes minute-hand-rotate {
+//     from {
+//       transform: rotate(#{$minute * 6 - 90}deg);
+//     }
+//     to {
+//       transform: rotate(#{$minute * 6 + 270}deg);
+//     }
+//   }
+
+//   @keyframes second-hand-rotate {
+//     from {
+//       transform: rotate(#{$second * 6 - 90}deg);
+//     }
+//     to {
+//       transform: rotate(#{$second * 6 + 270}deg);
+//     }
+//   }
+// }
+
+// @include getTime(15, 10, 0);
