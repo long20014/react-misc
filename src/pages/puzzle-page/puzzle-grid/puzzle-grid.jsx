@@ -35,6 +35,8 @@ const gridStyle = {
 
 class PuzzleGrid extends React.Component {
   emptySlotBg = 'rgba(255, 255, 255, 0.3)';
+  slotBg = 'rgba(255, 255, 255, 1)';
+  hoveredSlotBg = 'rgba(255, 255, 255, .6)';
   _isMounted = false;
   isWin = false; 
   subscribeWinning = (callback) => {
@@ -131,6 +133,8 @@ class PuzzleGrid extends React.Component {
       });  
       
       gridSlots.forEach(slot => {
+        const slotOriginalColor = slot.style.backgroundColor;
+
         slot.addEventListener('dragover', (e) => {
           e.preventDefault();          
         });
@@ -138,7 +142,7 @@ class PuzzleGrid extends React.Component {
         slot.addEventListener('dragenter', (e) => {
           e.preventDefault();
           if (originalSlot.id !== slot.id && !slot.hasChildNodes()) {
-            slot.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'           
+            slot.style.backgroundColor = this.hoveredSlotBg;          
           }                
         });
 
@@ -147,21 +151,21 @@ class PuzzleGrid extends React.Component {
           const emptySlotIds = gridService.getIdNumbers(emptySlots);
           const slotId = gridService.getIdNumber(slot)
           if (!emptySlotIds.includes(slotId)  ) {
-            slot.style.backgroundColor = 'rgba(255, 255, 255, 1)'   
+            slot.style.backgroundColor = this.slotBg;   
           }
           else {
             slot.style.backgroundColor = this.emptySlotBg  
           }                 
         });
         
-        slot.addEventListener('drop', (e) => {
-          const draggedSlot = draggedItem.parentNode;
+        slot.addEventListener('drop', (e) => {          
+          const draggedSlot = draggedItem.parentNode;          
           const slotId = gridService.getIdNumber(slot)
           const draggedSlotId = gridService.getIdNumber(draggedSlot)
           console.log(draggedSlot);                       
           if (!slot.hasChildNodes() && gridService.isAdjacent(slotId, draggedSlotId, this.gameSettings.arraySize)) {            
             slot.append(draggedItem)            
-            slot.style.backgroundColor = 'rgba(255, 255, 255, 1)'
+            slot.style.backgroundColor = this.slotBg
             gridSlots = Array.from(document.querySelectorAll('.puzzle-grid__slot'));    
             emptySlots = gridService.findEmptySlots(gridSlots)
             gridService.coloringEmptySlots(emptySlots, this.emptySlotBg)    
@@ -169,7 +173,7 @@ class PuzzleGrid extends React.Component {
             setTimeout(() => this.checkWiningCondition(transformedSlots, emptySlots), 100)            
           }
           else if (slotId !== draggedSlotId) {
-            slot.style.backgroundColor = this.emptySlotBg
+            slot.style.backgroundColor = slotOriginalColor;
           }          
         });         
       })
