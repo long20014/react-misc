@@ -27,35 +27,18 @@ export default class Timer extends React.Component {
     this.upTimingFunc = this.upTimingFunc.bind(this)    
   }
 
-  UNSAFE_componentWillMount() {
-    
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-    this.stopTimer()
-  }
-
   componentDidMount() {
     this._isMounted = true;
     if (this._isMounted) {
       this.startTimer();
     }
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    this.stopTimer();
+  }
   
-  componentDidUpdate(prevProps) {
-    // console.log(this.props);
-    
-    if (this.props.stop !== prevProps.stop && this.props.stop === true) {
-      this.stopTimer();
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    // console.log(nextProps);    
-    this.setState(state => state.isOn = !nextProps.stop );
-  }
-
   startTimer() {
     this.setState({
       isOn: true,

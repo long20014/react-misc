@@ -1,6 +1,7 @@
 import React from 'react';
 import './puzzle-grid.scss';
 import PuzzleGridSlot from '../puzzle-grid-slot/puzzle-grid-slot';
+import PuzzleSwapCount from '../puzzle-swap-count/puzzle-swap-count'
 import Timer from 'components/timer/timer';
 import GRID_SIZE_LV1 from 'shared/constants';
 import * as _ from 'lodash';
@@ -37,6 +38,7 @@ class PuzzleGrid extends React.Component {
   emptySlotBg = 'rgba(255, 255, 255, 0.3)';
   slotBg = 'rgba(255, 255, 255, 1)';
   hoveredSlotBg = 'rgba(255, 255, 255, .6)';
+  swapChanceCount = 1;
   _isMounted = false;
   isWin = false; 
   subscribeWinning = (callback) => {
@@ -56,6 +58,7 @@ class PuzzleGrid extends React.Component {
   constructor(props) {
     super(props);
     this.announceWinning = this.announceWinning.bind(this);
+    this.getSwapChanceCount = this.getSwapChanceCount.bind(this);
     this.gameSettings = {
       emptySlotQuantity: props.gameLevel.emptySlotQuantity,
       arraySize: props.gameLevel.arraySize
@@ -77,7 +80,7 @@ class PuzzleGrid extends React.Component {
     this.props.restartGame();
   }
 
-  getEmptySlotIds(gridSize, emptySlotQuantity) {
+  createEmptySlotIds(gridSize, emptySlotQuantity) {
     const emptySlotIds = [];
     let count = 0;
     while (count < emptySlotQuantity) {
@@ -91,11 +94,10 @@ class PuzzleGrid extends React.Component {
     return emptySlotIds;    
   }
 
-
   createGridSlots(emptySlotQuantity) {
     const slots = [];
     const gridSize = GRID_SIZE_LV1.height * GRID_SIZE_LV1.width;
-    const emptySlotIds = this.getEmptySlotIds(gridSize, emptySlotQuantity);
+    const emptySlotIds = this.createEmptySlotIds(gridSize, emptySlotQuantity);
     const pieceIdSet = gridService.getPieceIdSet(gridSize, emptySlotQuantity);    
     for (let i = 0; i < gridSize; i++) {
       let pieceId = null;
@@ -105,6 +107,10 @@ class PuzzleGrid extends React.Component {
       slots.push(<PuzzleGridSlot id={i} key={i} pieceId={pieceId} />)
     }
     return slots;
+  }
+
+  getSwapChanceCount(callback) {                   
+    callback(this.swapChanceCount)
   }
 
   initDraggingEnvironment() {
@@ -121,7 +127,7 @@ class PuzzleGrid extends React.Component {
         originalSlot = piece.parentElement;        
         draggedItem = piece;
         setTimeout(() => {
-          piece.style.display = 'none';
+          draggedItem.style.display = 'none';
         })
       });
       
@@ -150,7 +156,7 @@ class PuzzleGrid extends React.Component {
           e.preventDefault();
           const emptySlotIds = gridService.getIdNumbers(emptySlots);
           const slotId = gridService.getIdNumber(slot)
-          if (!emptySlotIds.includes(slotId)  ) {
+          if (!emptySlotIds.includes(slotId)) {
             slot.style.backgroundColor = this.slotBg;   
           }
           else {
@@ -161,9 +167,9 @@ class PuzzleGrid extends React.Component {
         slot.addEventListener('drop', (e) => {          
           const draggedSlot = draggedItem.parentNode;          
           const slotId = gridService.getIdNumber(slot)
-          const draggedSlotId = gridService.getIdNumber(draggedSlot)
-          console.log(draggedSlot);                       
-          if (!slot.hasChildNodes() && gridService.isAdjacent(slotId, draggedSlotId, this.gameSettings.arraySize)) {            
+          const draggedSlotId = gridService.getIdNumber(draggedSlot)     
+          if (!slot.hasChildNodes() && gridService.isAdjacent(slot, draggedSlot, this.gameSettings.arraySize)) { 
+            draggedItem.style.display = 'flex';           
             slot.append(draggedItem)            
             slot.style.backgroundColor = this.slotBg
             gridSlots = Array.from(document.querySelectorAll('.puzzle-grid__slot'));    
@@ -171,6 +177,14 @@ class PuzzleGrid extends React.Component {
             gridService.coloringEmptySlots(emptySlots, this.emptySlotBg)    
             transformedSlots = gridService.transformSlots(gridSlots, emptySlots, this.gameSettings.arraySize);            
             setTimeout(() => this.checkWiningCondition(transformedSlots, emptySlots), 100)            
+          }
+          else if (slot.hasChildNodes() && this.swapChanceCount > 0) {            
+            const swapSuccess = gridService.swapPieces(draggedSlot, slot, this.gameSettings.arraySize)
+            slot.firstElementChild.style.display = 'flex';
+            transformedSlots = gridService.transformSlots(gridSlots, emptySlots, this.gameSettings.arraySize);
+            if (swapSuccess) {
+              this.swapChanceCount--;
+            } 
           }
           else if (slotId !== draggedSlotId) {
             slot.style.backgroundColor = slotOriginalColor;
@@ -219,7 +233,8 @@ class PuzzleGrid extends React.Component {
           updateStop={this.subscribeWinning} 
           emitTime={this.getEmittedTime}
         />
-        {/* <button onClick={this.announceWinning}>Win</button> */}
+        <PuzzleSwapCount className={'text-pos'} updateCount={this.getSwapChanceCount} swapChanceCount={this.swapChanceCount}/>
+        <button onClick={this.announceWinning}>Win</button>
       </div>
     );
   }  

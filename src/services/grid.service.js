@@ -7,12 +7,13 @@ const GridService = () => {
     findEmptySlots,
     coloringEmptySlots,
     transformSlots,
-    isAdjacent
+    isAdjacent,
+    swapPieces
   }
 };
 
 const getIdNumber = (item) => {
-  return item.id.split('-')[1]
+  return +(item.id.split('-')[1])
 }
 
 const getIdNumbers = (items) => {
@@ -59,10 +60,9 @@ const transformSlots = (slots, emptySlots, arraySize) => {
   slots.forEach(slot => {
     const slotId = getIdNumber(slot);
     let draggableChecked = false;     
-    emptySlotIds.forEach(emptySlotId => {
-      if (!emptySlotIds.includes(slotId) && !draggableChecked) {        
-        let childDraggable = slot.firstElementChild.draggable;
-        if (isAdjacent(slotId, emptySlotId, arraySize) && !childDraggable) {
+    emptySlots.forEach(emptySlot => {
+      if (!emptySlotIds.includes(slotId) && !draggableChecked) { 
+        if (isAdjacent(slot, emptySlot, arraySize)) {
           slot.firstElementChild.draggable = true;
           draggableChecked = true;       
         }
@@ -76,14 +76,27 @@ const transformSlots = (slots, emptySlots, arraySize) => {
   return transformedSlots;
 }
 
-const isAdjacent = (slotId, comparedSlotId, arraySize) => {
-  slotId = +slotId;
-  comparedSlotId = + comparedSlotId; 
+const isAdjacent = (slot, comparedSlot, arraySize) => {  
+  const slotId = getIdNumber(slot);
+  const comparedSlotId = getIdNumber(comparedSlot);  
   if ((slotId === comparedSlotId + 1 && Math.floor(slotId/arraySize) === Math.floor(comparedSlotId/arraySize)) ||
     (slotId === comparedSlotId - 1 && Math.floor(slotId/arraySize) === Math.floor(comparedSlotId/arraySize)) ||
     slotId === comparedSlotId + arraySize ||
     slotId === comparedSlotId - arraySize) 
   {
+    return true;
+  }
+  return false
+}
+
+const swapPieces = (slot1, slot2, arraySize) => {  
+  if (slot1.hasChildNodes && slot2.hasChildNodes && isAdjacent(slot1, slot2, arraySize)) {
+    const slot1Copy = slot1.cloneNode(true);
+    const slot2Copy = slot2.cloneNode(true);      
+    slot1Copy.replaceChild(slot1.firstElementChild, slot1Copy.childNodes[0])
+    slot2Copy.replaceChild(slot2.firstElementChild, slot2Copy.childNodes[0])
+    slot1.appendChild(slot2Copy.firstElementChild)
+    slot2.appendChild(slot1Copy.firstElementChild)
     return true;
   }
   return false
