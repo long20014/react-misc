@@ -1,0 +1,14 @@
+.puzzle-grid__slot {
+  animation: slotAppear 2s ease-in alternate;
+}
+
+@keyframes slotAppear {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

@@ -234,7 +234,7 @@ class PuzzleGrid extends React.Component {
           emitTime={this.getEmittedTime}
         />
         <PuzzleSwapCount className={'text-pos'} updateCount={this.getSwapChanceCount} swapChanceCount={this.swapChanceCount}/>
-        <button onClick={this.announceWinning}>Win</button>
+        {/* <button onClick={this.announceWinning}>Win</button> */}
       </div>
     );
   }  

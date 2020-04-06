@@ -5,7 +5,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+  animation: appear 2s ease-in alternate;
   h1 {
     margin: 0;
+  }
+}
+
+@keyframes appear {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
