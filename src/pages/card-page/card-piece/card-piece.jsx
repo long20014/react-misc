@@ -6,11 +6,8 @@ import { countMoves, setWait } from 'actions/card-action';
 
 class CardPiece extends React.Component {
   constructor(props) {
-    super()
-    this.state = {
-      rotate: false
-    }
-    this.rotateCardUp = this.rotateCardUp.bind(this);    
+    super()    
+    this.flipCardUp = this.flipCardUp.bind(this);    
   }
 
   componentDidMount() {    
@@ -18,7 +15,7 @@ class CardPiece extends React.Component {
   }
 
   isPairMatching() { 
-    const openedPair = document.getElementsByClassName('rotate unmatched');
+    const openedPair = document.getElementsByClassName('flip-up unmatched');
     const card1Name = openedPair[0].getAttribute("name");
     const card2Name = openedPair[1].getAttribute("name");
     if (card1Name === card2Name) {
@@ -27,8 +24,8 @@ class CardPiece extends React.Component {
     return false;       
   }
 
-  disableRotation() {    
-    const openedPair = document.getElementsByClassName('rotate unmatched');
+  disableFlip() {    
+    const openedPair = document.getElementsByClassName('flip-up unmatched');
     const card1 = openedPair[0];
     const card2 = openedPair[1];
     card1.classList.remove('unmatched')  
@@ -40,31 +37,31 @@ class CardPiece extends React.Component {
     return number % 2 === 0;
   }
 
-  rotateCardUp() {
+  flipCardUp() {
     const cardPiece = document.querySelector(`#piece-${this.props.id}`);  
     if (cardPiece.classList.contains('unmatched') && !this.props.isWaiting) {      
-      if (!cardPiece.classList.contains('rotate')) {       
-        cardPiece.classList.add('rotate');
+      if (!cardPiece.classList.contains('flip-up')) {       
+        cardPiece.classList.add('flip-up');
         this.props.countMoves(this.props.moveCount)           
         if (this.isEven(this.props.moveCount+1)) {
           if(this.isPairMatching()) {
-            this.disableRotation();
+            this.disableFlip();
           }
           else {
             this.props.setWait(true);
-            setTimeout(() => this.rotateCardsDown(), 1000);           
+            setTimeout(() => this.flipCardsDown(), 1000);           
           }
         }
       }
     }           
   }  
 
-  rotateCardsDown() {    
-    const openedCards = [...document.getElementsByClassName('rotate unmatched')];
+  flipCardsDown() {    
+    const openedCards = [...document.getElementsByClassName('flip-up unmatched')];
     for (const card of openedCards) {
       if (card.classList.contains('unmatched')) {      
-        if (card.classList.contains('rotate')) {
-          card.classList.remove('rotate');
+        if (card.classList.contains('flip-up')) {
+          card.classList.remove('flip-up');
         }
       }
     }    
@@ -74,7 +71,7 @@ class CardPiece extends React.Component {
   render() {
     return (
       <div className="component-wrapper card-wrapper h-full unmatched" name={this.props.name} 
-        id={`piece-${this.props.id}`} onClick={this.rotateCardUp}>
+        id={`piece-${this.props.id}`} onClick={this.flipCardUp}>
         <div id={`piece-${this.props.id}-front`} className="card-piece card-front">
           <h1>{this.props.name}</h1>
         </div>
