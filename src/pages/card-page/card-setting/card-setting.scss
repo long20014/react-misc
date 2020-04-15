@@ -1,0 +1,37 @@
+.card-setting {
+  list-style: none;
+  li {
+    margin-top: 3em;
+    margin-bottom: 0.5em;
+    & a{
+      color: white;
+      text-decoration: none;
+      margin-bottom: 1em;
+      font-size: 2.5rem;
+      transition: all 0.25s ease;
+    }
+    &:hover {   
+      margin-top: 3em;   
+      a {
+        color: goldenrod;
+      }      
+    }
+  }
+  .setting-option-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  select {
+    font-size: 1em;
+    margin-top: 4px;
+    background: none;
+    border: none;
+    outline: none;
+    color: white;
+    option {
+      color: black;
+    }
+  }
+}

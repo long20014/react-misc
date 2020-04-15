@@ -1,15 +1,15 @@
 import React from 'react';
-import './puzzle-score-board.scss';
+import './card-score-board.scss';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
-class PuzzleScoreBoard extends React.Component {  
+class CardScoreBoard extends React.Component {  
   
   render() {
     return (
       <div className="component-wrapper">        
-        <ul className="puzzle-menu">
+        <ul className="card-menu">
           {this.props.winningInfo.map((info) => {
             const index = this.props.winningInfo.indexOf(info)
             return(
@@ -17,7 +17,7 @@ class PuzzleScoreBoard extends React.Component {
             ) 
           })}          
           <li>
-            <Link to="/puzzle">Back</Link>
+            <Link to="/card">Back</Link>
           </li>
         </ul>
       </div>
@@ -27,7 +27,7 @@ class PuzzleScoreBoard extends React.Component {
 
 const mapStateToProps = state => ({
   isUpdated: false,
-  winningInfo: state.puzzle.winningInfo
+  winningInfo: state.card.winningInfo
 })
 
-export default connect(mapStateToProps, {})(PuzzleScoreBoard);
+export default connect(mapStateToProps, {})(CardScoreBoard);

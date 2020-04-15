@@ -9,6 +9,7 @@ import PuzzlePageRoute from 'pages/puzzle-page/puzzle-page-route'
 import HomePageRoute from 'pages/home-page/home-page-route'
 import ClockPageRoute from 'pages/clock-page/clock-page-route'
 import LoginPageRoute from 'pages/login-page/login-page-route';
+import CardPageRoute from 'pages/card-page/card-page-route';
 
 const GLOBAL_GUARDS = [requireLogin];
 const MainRouter = () => {
@@ -20,6 +21,7 @@ const MainRouter = () => {
           {HomePageRoute()}
           {ClockPageRoute()}
           {PuzzlePageRoute()}
+          {CardPageRoute()}
           {LoginPageRoute()}
         </Switch>
       </GuardProvider>          

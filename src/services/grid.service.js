@@ -25,7 +25,7 @@ const getIdNumbers = (items) => {
   return ids;
 }
 
-const getPieceIdSet = (gridSize, emptySlotQuantity) => {
+const getPieceIdSet = (gridSize, emptySlotQuantity = 0) => {
   const pieceIdSet = [];
   for (let i = 0; i < gridSize - emptySlotQuantity; i++) {      
     pieceIdSet.push(i)      

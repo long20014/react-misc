@@ -33,6 +33,9 @@ class Nav extends React.Component {
             <li>
               <Link to="/puzzle">Puzzle</Link>
             </li>
+            <li>
+              <Link to="/card">Card</Link>
+            </li>
           </ul>
           {isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}
         </div>

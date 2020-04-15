@@ -3,7 +3,7 @@ import './puzzle-grid.scss';
 import PuzzleGridSlot from '../puzzle-grid-slot/puzzle-grid-slot';
 import PuzzleSwapCount from '../puzzle-swap-count/puzzle-swap-count'
 import Timer from 'components/timer/timer';
-import GRID_SIZE_LV1 from 'shared/constants';
+import constants from 'shared/constants';
 import * as _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -25,12 +25,16 @@ const gridSlotSize = (gridSize) => {
   }  
 }
 
+const gap = 10;
+const HorizontalGaps = constants.GRID_SIZE_LV1.width * gap
+const VerticalGaps = constants.GRID_SIZE_LV1.height * gap
+
 const gridStyle = { 
-  width: `${GRID_SIZE_LV1.width * gridSlotSize(GRID_SIZE_LV1).width + 30}px`,
-  height: `${GRID_SIZE_LV1.height * gridSlotSize(GRID_SIZE_LV1).height + 30}px`,  
-  gridTemplateColumns: `repeat(${GRID_SIZE_LV1.width}, ${gridSlotSize(GRID_SIZE_LV1).width}px)`,
-  gridTemplateRows: `repeat(${GRID_SIZE_LV1.height}, ${gridSlotSize(GRID_SIZE_LV1).height}px)`,
-  gridGap: `10px`,
+  width: `${constants.GRID_SIZE_LV1.width * gridSlotSize(constants.GRID_SIZE_LV1).width + HorizontalGaps}px`,
+  height: `${constants.GRID_SIZE_LV1.height * gridSlotSize(constants.GRID_SIZE_LV1).height + VerticalGaps}px`,  
+  gridTemplateColumns: `repeat(${constants.GRID_SIZE_LV1.width}, ${gridSlotSize(constants.GRID_SIZE_LV1).width}px)`,
+  gridTemplateRows: `repeat(${constants.GRID_SIZE_LV1.height}, ${gridSlotSize(constants.GRID_SIZE_LV1).height}px)`,
+  gridGap: `${gap}px`,
   border: `1px solid wheat`,  
 }
 
@@ -96,7 +100,7 @@ class PuzzleGrid extends React.Component {
 
   createGridSlots(emptySlotQuantity) {
     const slots = [];
-    const gridSize = GRID_SIZE_LV1.height * GRID_SIZE_LV1.width;
+    const gridSize = constants.GRID_SIZE_LV1.height * constants.GRID_SIZE_LV1.width;
     const emptySlotIds = this.createEmptySlotIds(gridSize, emptySlotQuantity);
     const pieceIdSet = gridService.getPieceIdSet(gridSize, emptySlotQuantity);    
     for (let i = 0; i < gridSize; i++) {
