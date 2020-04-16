@@ -1,7 +1,7 @@
 import React from 'react';
 import './card-grid.scss';
 import CardGridSlot from '../card-grid-slot/card-grid-slot';
-import CardOpenCount from '../card-open-count/card-open-count'
+import Counter from '../counter/counter'
 import Timer from 'components/timer/timer';
 import constants from 'shared/constants';
 import * as _ from 'lodash';
@@ -61,9 +61,9 @@ class CardGrid extends React.Component {
   }
 
   constructor(props) {
-    super(props);
-    this.announceWinning = this.announceWinning.bind(this);   
+    super(props);    
     this.getMoveCount = this.getMoveCount.bind(this);
+    this.getMatchedPairs = this.getMatchedPairs.bind(this);
     this.gameSettings = {
       emptySlotQuantity: props.gameLevel.emptySlotQuantity,
       arraySize: props.gameLevel.arraySize
@@ -96,38 +96,14 @@ class CardGrid extends React.Component {
       slots.push(<CardGridSlot id={i} key={i} pieceId={pieceId} name={name}/>)
     }
     return slots;
-  }
- 
+  } 
 
   getMoveCount(callback) {                   
     callback(this.props.moveCount)
-  }  
-
-  checkWiningCondition(gridSlots, emptySlots) {
-    let count = 0;
-    const winningCount = gridSlots.length - emptySlots.length;       
-    gridSlots.forEach(slot => {
-      const child = slot.firstElementChild;
-      const slotId = gridService.getIdNumber(slot);
-      let childId = null;
-      if (child) {
-        childId = gridService.getIdNumber(child)
-      }
-      if (slotId === childId) {
-        count++;
-      }
-    })       
-    if (count === winningCount) {
-      this.announceWinning();
-    }
-  }
-
-  announceWinning() {
-    this.props.broadcastWinning();    
-    setTimeout(() => {
-      console.log('You win the game', this.props.isWin);
-      alert('Congratulation! You win the game')  
-    }, 100)      
+  } 
+  
+  getMatchedPairs(callback) {                   
+    callback(this.props.matchedPairs)
   }
   
   render() {    
@@ -142,8 +118,14 @@ class CardGrid extends React.Component {
           updateStop={this.subscribeWinning} 
           emitTime={this.getEmittedTime}
         /> */}
-        <CardOpenCount className={'text-pos'} updateCount={this.getMoveCount} count={this.swapChanceCount}/>
-        
+        <Counter className={'text-pos'} 
+          label="Moves"
+          updateCount={this.getMoveCount} 
+          count={this.props.moveCount}/>
+        <Counter className={'text-pos-2'} 
+          label="Matches"
+          updateCount={this.getMatchedPairs} 
+          count={this.props.matchedPairs}/> 
       </div>
     );
   }  
@@ -159,7 +141,8 @@ const mapStateToProps = state => ({
   isUpdated: false,
   isWin: state.card.isWin,
   gameLevel: state.card.gameLevel,
-  moveCount: state.card.moveCount
+  moveCount: state.card.moveCount,
+  matchedPairs: state.card.matchedPairs
 })
 
 export default connect(mapStateToProps, { broadcastWinning, restartGame, getWinningInfo })(CardGrid);

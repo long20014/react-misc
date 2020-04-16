@@ -180,7 +180,11 @@ class PuzzleGrid extends React.Component {
             emptySlots = gridService.findEmptySlots(gridSlots)
             gridService.coloringEmptySlots(emptySlots, this.emptySlotBg)    
             transformedSlots = gridService.transformSlots(gridSlots, emptySlots, this.gameSettings.arraySize);            
-            setTimeout(() => this.checkWiningCondition(transformedSlots, emptySlots), 100)            
+            setTimeout(() => {
+              if (this.checkWiningCondition(transformedSlots, emptySlots)) {
+                this.announceWinning();
+              }              
+            }, 100)            
           }
           else if (slot.hasChildNodes() && this.swapChanceCount > 0) {            
             const swapSuccess = gridService.swapPieces(draggedSlot, slot, this.gameSettings.arraySize)
@@ -213,8 +217,9 @@ class PuzzleGrid extends React.Component {
       }
     })       
     if (count === winningCount) {
-      this.announceWinning();
+      return true;
     }
+    return false;
   }
 
   announceWinning() {

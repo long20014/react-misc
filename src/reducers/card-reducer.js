@@ -1,11 +1,11 @@
 const initialState = {
   moveCount: 0,
+  matchedPairs: 0,
   isWaiting: false,
   isWin: false,
   gameLevel: {
-    level: 'Normal',
-    emptySlotQuantity: 2,
-    arraySize: 3
+    level: 'Normal',    
+    arraySize: 4
   },
   winningInfo: []
 }
@@ -14,27 +14,23 @@ const changeLevel = (level) => {
   switch (level) {
     case 'Easy':
       return {
-        level,
-        emptySlotQuantity: 3,
-        arraySize: 3
+        level,        
+        arraySize: 4
       }
     case 'Normal':
       return {
-        level,
-        emptySlotQuantity: 2,
-        arraySize: 3
+        level,        
+        arraySize: 4
       }
     case 'Hard':
       return {
-        level,
-        emptySlotQuantity: 1,
-        arraySize: 3
+        level,        
+        arraySize: 4
       }
     default:
       return {
-        level: 2,
-        emptySlotQuantity: 2,
-        arraySize: 3
+        level: 'Normal',        
+        arraySize: 4
       }
   }
 }
@@ -56,7 +52,7 @@ export default function (state = initialState, action) {
         ...state,
         winningInfo: [...state.winningInfo, action.winningInfo]
       };
-    case 'countMoves':
+    case 'increaseMoveCount':
       return {
         ...state,
         moveCount: action.moveCount
@@ -65,6 +61,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isWaiting: action.isWaiting
+      };
+    case 'increaseMatchedPairCount':
+      return {
+        ...state,
+        matchedPairs: action.matchedPairs
       };
     default:
       return state;

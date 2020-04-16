@@ -1,7 +1,7 @@
 import React from 'react';
-import './card-open-count.scss';
+import './counter.scss';
 
-export default class CardOpenCount extends React.Component {
+export default class Counter extends React.Component {
   _isMounted = false;
   _stopSubscribe = false;
   subscribeCount = () => {    
@@ -46,7 +46,7 @@ export default class CardOpenCount extends React.Component {
                  
     return (     
       <div className={`component-wrapper ${this.props.className}`}>
-        <p>Moves: {this.state.count}</p>
+        <p>{this.props.label}: {this.state.count}</p>
       </div>
     );
   }

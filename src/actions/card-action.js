@@ -1,8 +1,17 @@
-export function countMoves(currentMoveCount) {
+export function increaseMoveCount(currentMoveCount) {
   return function(dispatch) {        
     dispatch({
-      type: 'countMoves',
-      moveCount: increaseMoveCount(currentMoveCount),      
+      type: 'increaseMoveCount',
+      moveCount: increaseCount(currentMoveCount),      
+    })
+  }
+}
+
+export function increaseMatchedPairCount(currentMatchedPairs) {
+  return function(dispatch) {        
+    dispatch({
+      type: 'increaseMatchedPairCount',
+      matchedPairs: increaseCount(currentMatchedPairs),      
     })
   }
 }
@@ -52,6 +61,6 @@ export function getWinningInfo(info) {
   }
 }
 
-function increaseMoveCount(moveCount) {
-  return ++moveCount;
+function increaseCount(count) {
+  return ++count;
 }
