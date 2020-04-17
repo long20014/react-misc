@@ -62,6 +62,13 @@ export default function (state = initialState, action) {
         ...state,
         matchedPairs: action.matchedPairs
       };
+    case 'restartGame':
+      return {
+        ...state,
+        isWin: action.isWin,
+        moveCount: action.moveCount,
+        matchedPairs: action.matchedPairs,
+      };
     default:
       return state;
   }

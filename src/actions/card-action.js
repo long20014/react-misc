@@ -37,8 +37,10 @@ export function broadcastWinning() {
 export function restartGame() {
   return function(dispatch) {    
     dispatch({
-      type: 'broadcastWinning',
-      isWin: false
+      type: 'restartGame',
+      isWin: false,
+      moveCount: 0,
+      matchedPairs: 0,
     })
   }
 }
