@@ -16,8 +16,7 @@ class CardSetting extends React.Component {
         <ul className="card-setting">
           <div className="setting-option-wrapper">
             <label htmlFor="level" style={{marginRight: '10px'}}>Game Level:</label>
-            <select name="level" id="level" onChange={this.change} value={this.props.level}>
-              <option value="Easy">Easy</option>
+            <select name="level" id="level" onChange={this.change} value={this.props.level}>              
               <option value="Normal">Normal</option>
               <option value="Hard">Hard</option>
             </select> 

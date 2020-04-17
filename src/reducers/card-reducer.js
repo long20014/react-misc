@@ -11,12 +11,7 @@ const initialState = {
 }
 
 const changeLevel = (level) => {
-  switch (level) {
-    case 'Easy':
-      return {
-        level,        
-        arraySize: 4
-      }
+  switch (level) {   
     case 'Normal':
       return {
         level,        

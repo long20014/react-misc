@@ -35,9 +35,37 @@ class CardPiece extends React.Component {
     card2.classList.remove('unmatched')  
   }
 
-
   isEven(number) {
     return number % 2 === 0;
+  }
+
+  shiftArrayToLeft(arr, steps) {    
+    arr = arr.concat(arr.splice(0, steps)); 
+    return arr;    
+  }
+
+  changeCardsPosition() {
+    const slots = document.getElementsByClassName('card-grid__slot');
+    const unmatchedSlots = [];
+    let children = [];
+    for (const slot of slots) {
+      const child = slot.firstChild;
+      if (child.classList.contains('unmatched')) {
+        children.push(child);
+        unmatchedSlots.push(slot);
+      }      
+    }
+    children = this.shiftArrayToLeft(children, 2);
+    for (let i = 0; i < unmatchedSlots.length; i++) {   
+      const slot = unmatchedSlots[i];      
+      const firstChild = slot.firstChild;
+      console.log('before:', firstChild);  
+      if (firstChild) {
+        slot.removeChild(firstChild)
+      }       
+      slot.appendChild(children[i]);
+      console.log('after:', unmatchedSlots[i].firstChild);    
+    }     
   }
 
   flipCardUp() {
@@ -58,7 +86,10 @@ class CardPiece extends React.Component {
             this.props.setWait(true);
             setTimeout(() => this.flipCardsDown(), 1000);           
           }
-        }
+          if (this.props.gameLevel.level === 'Hard') {
+            setTimeout(() => this.changeCardsPosition(), 1001);
+          }          
+        }        
       }
     }           
   }  
