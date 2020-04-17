@@ -15,7 +15,7 @@ import CardPageRoute from 'pages/card-page/card-page-route';
 const GLOBAL_GUARDS = [requireLogin];
 const MainRouter = () => {
   return (
-    <HashRouter basename={`${process.env.PUBLIC_URL}/`} history={history}>
+    <HashRouter history={history}>
       <Nav />
       <GuardProvider guards={GLOBAL_GUARDS} loading="Loading..." >
         <Switch>

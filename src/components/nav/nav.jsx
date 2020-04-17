@@ -26,16 +26,16 @@ class Nav extends React.Component {
           <h3>Logo</h3>
           <ul className="nav-links">
             <li>
-              <Link to={pURL + "/"}>Home</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to={pURL + "/clock"}>Clock</Link>
+              <Link to="/clock">Clock</Link>
             </li>
             <li>
-              <Link to={pURL + "/puzzle"}>Puzzle</Link>
+              <Link to="/puzzle">Puzzle</Link>
             </li>
             <li>
-              <Link to={pURL + "/card"}>Card</Link>
+              <Link to="/card">Card</Link>
             </li>
           </ul>
           {isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}
