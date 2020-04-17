@@ -4,6 +4,7 @@ import { GuardProvider } from 'react-router-guards';
 import history from 'services/history.service';
 import { Switch } from 'react-router-dom';
 import { Router } from "react-router";
+import { HashRouter } from 'react-router-dom';
 import Nav from 'components/nav/nav';
 import PuzzlePageRoute from 'pages/puzzle-page/puzzle-page-route'
 import HomePageRoute from 'pages/home-page/home-page-route'
@@ -14,7 +15,7 @@ import CardPageRoute from 'pages/card-page/card-page-route';
 const GLOBAL_GUARDS = [requireLogin];
 const MainRouter = () => {
   return (
-    <Router basename={`${process.env.PUBLIC_URL}/`} history={history}>
+    <HashRouter basename={`${process.env.PUBLIC_URL}/`} history={history}>
       <Nav />
       <GuardProvider guards={GLOBAL_GUARDS} loading="Loading..." >
         <Switch>
@@ -25,7 +26,7 @@ const MainRouter = () => {
           {LoginPageRoute()}
         </Switch>
       </GuardProvider>          
-    </Router>
+    </HashRouter>
   )
 }
 
