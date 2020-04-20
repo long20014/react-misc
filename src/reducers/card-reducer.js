@@ -42,7 +42,7 @@ export default function (state = initialState, action) {
         ...state,
         gameLevel: changeLevel(action.level)
       };
-    case 'getWinningInfo':
+    case 'setWinningInfo':
       return {
         ...state,
         winningInfo: [...state.winningInfo, action.winningInfo]

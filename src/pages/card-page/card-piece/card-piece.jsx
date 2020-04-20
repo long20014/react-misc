@@ -2,19 +2,31 @@ import React from 'react';
 import './card-piece.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { increaseMatchedPairCount, setWait, increaseMoveCount, broadcastWinning } 
+import { increaseMatchedPairCount, setWait, increaseMoveCount, 
+  broadcastWinning, setWinningInfo } 
   from 'actions/card-action';
 
 class CardPiece extends React.Component {
   constructor(props) {
     super()    
     this.flipCardUp = this.flipCardUp.bind(this); 
+    this.setWinningInfo = this.setWinningInfo.bind(this);
     this.checkWiningCondition = this.checkWiningCondition.bind(this);   
     this.announceWinning = this.announceWinning.bind(this);   
   }
 
   componentDidMount() {    
    
+  }
+
+  setWinningInfo = () => {
+    console.log('get time');     
+    const winningInfo = {
+      moves: this.props.moveCount,
+      playerName: 'Unknown player',
+      level: this.props.gameLevel.level
+    }
+    this.props.setWinningInfo(winningInfo)
   }
 
   isPairMatching() { 
@@ -80,6 +92,7 @@ class CardPiece extends React.Component {
             this.disableFlip();            
             if (this.checkWiningCondition()) {
               this.announceWinning();
+              this.setWinningInfo();
             }
           }
           else {
@@ -149,4 +162,7 @@ const mapStateToProps = state => ({
   gameLevel: state.card.gameLevel
 })
 
-export default connect(mapStateToProps, { increaseMoveCount, increaseMatchedPairCount, setWait, broadcastWinning })(CardPiece);
+export default connect(mapStateToProps, { 
+  increaseMoveCount, increaseMatchedPairCount, setWait, broadcastWinning,
+  setWinningInfo 
+})(CardPiece);

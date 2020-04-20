@@ -49,7 +49,7 @@ export default function (state = initialState, action) {
         ...state,
         gameLevel: changeLevel(action.level)
       };
-    case 'getWinningInfo':
+    case 'setWinningInfo':
       console.log(state.winningInfo);
       console.log(action.winningInfo);
       return {

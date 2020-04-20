@@ -6,6 +6,7 @@ import history from 'services/history.service';
 import { connect } from 'react-redux';
 import { loginAction } from 'actions/auth-action';
 
+const pURL = process.env.PUBLIC_URL;
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -14,12 +15,12 @@ class LoginPage extends React.Component {
 
   login() {    
     this.props.loginAction();
-    history.push('/')        
+    history.push(pURL + '/')        
   };
 
   render() {     
     if (this.props.isLoggedIn) {
-      return <Redirect to="/" />
+      return <Redirect to={pURL + "/"} />
     }   
     return (
       <div className="component-wrapper">

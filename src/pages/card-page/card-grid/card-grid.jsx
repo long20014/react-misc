@@ -7,7 +7,7 @@ import constants from 'shared/constants';
 import * as _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { broadcastWinning, restartGame, getWinningInfo } from 'actions/card-action';
+import { broadcastWinning, restartGame, setWinningInfo } from 'actions/card-action';
 import GridService from 'services/grid.service';
 import CardGridService from 'services/card-grid.service';
 
@@ -57,8 +57,8 @@ class CardGrid extends React.Component {
       playerName: 'Unknown player',
       level: this.props.gameLevel.level
     }
-    this.props.getWinningInfo(winningInfo)
-  }
+    this.props.setWinningInfo(winningInfo)
+  }  
 
   constructor(props) {
     super(props);    
@@ -134,7 +134,7 @@ class CardGrid extends React.Component {
 CardGrid.propsType = {
   broadcastWinning: PropTypes.func.isRequired,
   restartGame: PropTypes.func.isRequired,
-  getWinningInfo: PropTypes.func.isRequired
+  setWinningInfo: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -145,4 +145,4 @@ const mapStateToProps = state => ({
   matchedPairs: state.card.matchedPairs
 })
 
-export default connect(mapStateToProps, { broadcastWinning, restartGame, getWinningInfo })(CardGrid);
+export default connect(mapStateToProps, { broadcastWinning, restartGame, setWinningInfo: setWinningInfo })(CardGrid);

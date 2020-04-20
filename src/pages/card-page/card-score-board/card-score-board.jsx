@@ -13,7 +13,7 @@ class CardScoreBoard extends React.Component {
           {this.props.winningInfo.map((info) => {
             const index = this.props.winningInfo.indexOf(info)
             return(
-              <p key={index}>{index+1}. {info.playerName}: {+info.playedTime/1000}s ({info.level})</p>
+              <p key={index}>{index+1}. {info.playerName}: {+info.moves} moves ({info.level})</p>
             ) 
           })}          
           <li>

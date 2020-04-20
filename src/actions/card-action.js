@@ -54,10 +54,10 @@ export function changeGameLevel(level) {
   }
 }
 
-export function getWinningInfo(info) {  
+export function setWinningInfo(info) {  
   return function(dispatch) {    
     dispatch({
-      type: 'getWinningInfo',
+      type: 'setWinningInfo',
       winningInfo: info
     })
   }

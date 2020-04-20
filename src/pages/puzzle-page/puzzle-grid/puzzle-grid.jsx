@@ -7,7 +7,7 @@ import constants from 'shared/constants';
 import * as _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { broadcastWinning, restartGame, getWinningInfo } from 'actions/puzzle-action';
+import { broadcastWinning, restartGame, setWinningInfo } from 'actions/puzzle-action';
 import GridService from 'services/grid.service';
 
 const gridService = GridService();
@@ -56,7 +56,7 @@ class PuzzleGrid extends React.Component {
       playerName: 'Unknown player',
       level: this.props.gameLevel.level
     }
-    this.props.getWinningInfo(winningInfo)
+    this.props.setWinningInfo(winningInfo)
   }
 
   constructor(props) {
@@ -252,7 +252,7 @@ class PuzzleGrid extends React.Component {
 PuzzleGrid.propsType = {
   broadcastWinning: PropTypes.func.isRequired,
   restartGame: PropTypes.func.isRequired,
-  getWinningInfo: PropTypes.func.isRequired
+  setWinningInfo: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -261,4 +261,4 @@ const mapStateToProps = state => ({
   gameLevel: state.puzzle.gameLevel
 })
 
-export default connect(mapStateToProps, { broadcastWinning, restartGame, getWinningInfo })(PuzzleGrid);
+export default connect(mapStateToProps, { broadcastWinning, restartGame, setWinningInfo })(PuzzleGrid);
