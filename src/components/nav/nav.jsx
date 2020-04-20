@@ -1,13 +1,11 @@
 import React from 'react';
 import './nav.scss';
-import { Link, Redirect, withRouter } from 'react-router-dom';
-import history from 'services/history.service';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { logoutAction } from 'actions/auth-action';
 
-const pURL = process.env.PUBLIC_URL;
 class Nav extends React.Component {
   constructor(props) {
     super(props);    

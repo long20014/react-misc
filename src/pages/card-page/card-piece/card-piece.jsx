@@ -22,7 +22,7 @@ class CardPiece extends React.Component {
   setWinningInfo = () => {
     console.log('get time');     
     const winningInfo = {
-      moves: this.props.moveCount,
+      moves: this.props.moveCount + 1,
       playerName: 'Unknown player',
       level: this.props.gameLevel.level
     }

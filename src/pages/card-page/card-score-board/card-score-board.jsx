@@ -7,11 +7,14 @@ import { connect } from 'react-redux';
 class CardScoreBoard extends React.Component {  
   
   render() {
+    const sortedWinningInfo = this.props.winningInfo.sort((info1, info2) => {
+      return info1.moves - info2.moves;
+    })
     return (
       <div className="component-wrapper">        
-        <ul className="card-menu">
-          {this.props.winningInfo.map((info) => {
-            const index = this.props.winningInfo.indexOf(info)
+        <ul className="card-menu"> {  
+          sortedWinningInfo.map((info) => {
+            const index = sortedWinningInfo.indexOf(info)
             return(
               <p key={index}>{index+1}. {info.playerName}: {+info.moves} moves ({info.level})</p>
             ) 

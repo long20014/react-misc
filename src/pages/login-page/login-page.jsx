@@ -2,11 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './login-page.scss';
-import history from 'services/history.service';
 import { connect } from 'react-redux';
 import { loginAction } from 'actions/auth-action';
 
-const pURL = process.env.PUBLIC_URL;
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
