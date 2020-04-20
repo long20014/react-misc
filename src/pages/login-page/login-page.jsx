@@ -15,12 +15,12 @@ class LoginPage extends React.Component {
 
   login() {    
     this.props.loginAction();
-    history.push('/')        
+    // history.push(pURL)        
   };
 
   render() {     
     if (this.props.isLoggedIn) {
-      return <Redirect to={"/"} />
+      return <Redirect to={pURL} />
     }   
     return (
       <div className="component-wrapper">

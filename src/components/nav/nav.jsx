@@ -1,6 +1,6 @@
 import React from 'react';
 import './nav.scss';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import history from 'services/history.service';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ class Nav extends React.Component {
 
   logout() {    
     this.props.logoutAction();        
-    history.push(pURL + '/#/login')
+    history.push(pURL + '/#/login');
   };
 
   render() {
