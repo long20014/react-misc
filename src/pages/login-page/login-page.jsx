@@ -20,7 +20,7 @@ class LoginPage extends React.Component {
 
   render() {     
     if (this.props.isLoggedIn) {
-      return <Redirect to={pURL} />
+      return <Redirect to={"/"} />
     }   
     return (
       <div className="component-wrapper">
