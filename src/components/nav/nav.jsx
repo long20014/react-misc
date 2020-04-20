@@ -16,7 +16,7 @@ class Nav extends React.Component {
 
   logout() {    
     this.props.logoutAction();        
-    this.props.history.push(pURL + 'login');
+    this.props.history.push('login');
   };
 
   render() {
