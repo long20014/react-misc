@@ -4,7 +4,7 @@ const initialState = {
   isWaiting: false,
   isWin: false,
   gameLevel: {
-    level: 'Normal',    
+    level: 'Hard',    
     arraySize: 4
   },
   winningInfo: []
