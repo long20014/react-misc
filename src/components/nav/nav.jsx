@@ -1,9 +1,10 @@
 import React from 'react';
 import './nav.scss';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import history from 'services/history.service';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { logoutAction } from 'actions/auth-action';
 
 const pURL = process.env.PUBLIC_URL;
@@ -15,7 +16,7 @@ class Nav extends React.Component {
 
   logout() {    
     this.props.logoutAction();        
-    history.push(pURL + '/#/login');
+    this.props.history.push(pURL + 'login');
   };
 
   render() {
@@ -53,4 +54,7 @@ const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn
 })
 
-export default connect(mapStateToProps, { logoutAction })(Nav);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { logoutAction })
+)(Nav);

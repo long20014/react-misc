@@ -14,8 +14,7 @@ class LoginPage extends React.Component {
   } 
 
   login() {    
-    this.props.loginAction();
-    // history.push(pURL)        
+    this.props.loginAction();    
   };
 
   render() {     
