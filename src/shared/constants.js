@@ -8,10 +8,14 @@ const GRID_SIZE_LV2 = {
   width: 4
 }
 
-const constants =  {  
-  GRID_SIZE_LV1,
-  GRID_SIZE_LV2  
+const config = {
+  API_URL: 'https://5e9e56abfb467500166c3dce.mockapi.io/react-misc/'
 }
 
+const constants =  {  
+  GRID_SIZE_LV1,
+  GRID_SIZE_LV2,
+  config  
+}
 
 export default constants

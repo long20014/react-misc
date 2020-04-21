@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { increaseMatchedPairCount, setWait, increaseMoveCount, 
   broadcastWinning, setWinningInfo } 
   from 'actions/card-action';
+import cardService from 'services/card.service';
 
 class CardPiece extends React.Component {
   constructor(props) {
@@ -19,14 +20,12 @@ class CardPiece extends React.Component {
    
   }
 
-  setWinningInfo = () => {
-    console.log('get time');     
-    const winningInfo = {
-      moves: this.props.moveCount + 1,
-      playerName: 'Unknown player',
-      level: this.props.gameLevel.level
-    }
+  setWinningInfo(winningInfo) {          
     this.props.setWinningInfo(winningInfo)
+  }
+
+  updateWinningInfo(winningInfo) {
+    cardService.updateWinningInfo(winningInfo);
   }
 
   isPairMatching() { 
@@ -70,13 +69,11 @@ class CardPiece extends React.Component {
     children = this.shiftArrayToLeft(children, 2);
     for (let i = 0; i < unmatchedSlots.length; i++) {   
       const slot = unmatchedSlots[i];      
-      const firstChild = slot.firstChild;
-      console.log('before:', firstChild);  
+      const firstChild = slot.firstChild;     
       if (firstChild) {
         slot.removeChild(firstChild)
       }       
-      slot.appendChild(children[i]);
-      console.log('after:', unmatchedSlots[i].firstChild);    
+      slot.appendChild(children[i]);      
     }     
   }
 
@@ -91,14 +88,20 @@ class CardPiece extends React.Component {
             this.props.increaseMatchedPairCount(this.props.matchedPairs)
             this.disableFlip();            
             if (this.checkWiningCondition()) {
+              const winningInfo = {
+                moves: this.props.moveCount + 1,
+                playerName: 'Unknown player',
+                level: this.props.gameLevel.level
+              }
               this.announceWinning();
-              this.setWinningInfo();
-            }
+              this.setWinningInfo(winningInfo);
+              this.updateWinningInfo(winningInfo);
+            }            
           }
           else {
             this.props.setWait(true);
             setTimeout(() => this.flipCardsDown(), 1000);           
-          }
+          }          
           if (this.props.gameLevel.level === 'Hard') {
             setTimeout(() => this.changeCardsPosition(), 1001);
           }          
@@ -159,7 +162,8 @@ const mapStateToProps = state => ({
   moveCount: state.card.moveCount,
   matchedPairs: state.card.matchedPairs,
   isWaiting: state.card.isWaiting,
-  gameLevel: state.card.gameLevel
+  gameLevel: state.card.gameLevel,
+  winningInfo: state.card.winningInfo
 })
 
 export default connect(mapStateToProps, { 
