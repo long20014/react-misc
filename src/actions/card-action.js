@@ -1,3 +1,27 @@
+import constants from 'shared/constants';
+import callApi from 'services/api-caller.service'
+
+const config = constants.config;
+
+export function fetchScores() {
+  return async function(dispatch) { 
+    return callApi(config.CARD_API_URL, 'card-score', 'GET', null).then(res => {
+      const sortedWinningInfo = res.data.sort((info1, info2) => {
+        return info1.winningInfo.moves - info2.winningInfo.moves;
+      })
+      dispatch(saveScores(sortedWinningInfo))
+    })          
+  }
+}
+
+export  function saveScores(score) {
+  return {
+    type: 'saveScores',
+    winningInfo: score
+  }  
+}
+
+
 export function increaseMoveCount(currentMoveCount) {
   return function(dispatch) {        
     dispatch({

@@ -69,6 +69,11 @@ export default function (state = initialState, action) {
         moveCount: action.moveCount,
         matchedPairs: action.matchedPairs,
       };
+    case 'saveScores':
+      return {
+        ...state,
+        winningInfo: action.winningInfo
+      };
     default:
       return state;
   }

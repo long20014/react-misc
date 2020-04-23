@@ -9,7 +9,7 @@ const GRID_SIZE_LV2 = {
 }
 
 const config = {
-  API_URL: 'https://5e9e56abfb467500166c3dce.mockapi.io/react-misc/'
+  CARD_API_URL: 'https://5e9e56abfb467500166c3dce.mockapi.io/react-misc/'
 }
 
 const constants =  {  

@@ -93,8 +93,7 @@ class CardPiece extends React.Component {
                 playerName: 'Unknown player',
                 level: this.props.gameLevel.level
               }
-              this.announceWinning();
-              this.setWinningInfo(winningInfo);
+              this.announceWinning();              
               this.updateWinningInfo(winningInfo);
             }            
           }
