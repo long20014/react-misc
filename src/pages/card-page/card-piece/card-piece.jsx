@@ -145,7 +145,18 @@ class CardPiece extends React.Component {
           }
           else {            
             if (this.props.gameLevel.level === 'Nightmare') {              
-              this.props.increaseUnsuccessfulMoveCount(this.props.gameLevel.unsuccessfulMoves)              
+              this.props.increaseUnsuccessfulMoveCount(this.props.gameLevel.unsuccessfulMoves);
+              if ((this.props.gameLevel.unsuccessfulMoves + 2) >= 12 && 
+                (this.props.gameLevel.unsuccessfulMoves + 2 - 12) % 4 === 0) {              
+                const matchedCards = [...document.getElementsByClassName('flip-up matched')];     
+                if (matchedCards.length > 1 ) {
+                  this.props.alterMatchedPairCount(this.props.matchedPairs, -1); 
+                  this.flipMatchedCardsDown(matchedCards);
+                }            
+                else {
+                  this.props.resetUnsuccessfulMoveCount();
+                }
+              }              
             }            
             this.props.setWait(true);
             setTimeout(() => this.flipCardsDown(), 1000);           
@@ -153,18 +164,7 @@ class CardPiece extends React.Component {
           if (this.props.gameLevel.level === 'Hard' || this.props.gameLevel.level === 'Nightmare') {            
             setTimeout(() => this.changeCardsPosition(), 1001);
           }
-          if (this.props.gameLevel.level === 'Nightmare' &&
-            (this.props.gameLevel.unsuccessfulMoves + 2) >= 12 && 
-            (this.props.gameLevel.unsuccessfulMoves + 2 - 12) % 4 === 0) {              
-            const matchedCards = [...document.getElementsByClassName('flip-up matched')];     
-            if (matchedCards.length > 1 ) {
-              this.props.alterMatchedPairCount(this.props.matchedPairs, -1); 
-              this.flipMatchedCardsDown(matchedCards);
-            }            
-            else {
-              this.props.resetUnsuccessfulMoveCount();
-            }
-          }                    
+                              
         }        
       }
     }           
