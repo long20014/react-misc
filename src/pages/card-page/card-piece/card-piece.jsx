@@ -2,8 +2,9 @@ import React from 'react';
 import './card-piece.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { increaseMatchedPairCount, setWait, increaseMoveCount, 
-  broadcastWinning, setWinningInfo } 
+import { alterMatchedPairCount, setWait, increaseMoveCount, 
+  broadcastWinning, setWinningInfo, toggleShiftMode, increaseUnsuccessfulMoveCount,
+  resetUnsuccessfulMoveCount } 
   from 'actions/card-action';
 import cardService from 'services/card.service';
 
@@ -14,6 +15,8 @@ class CardPiece extends React.Component {
     this.setWinningInfo = this.setWinningInfo.bind(this);
     this.checkWiningCondition = this.checkWiningCondition.bind(this);   
     this.announceWinning = this.announceWinning.bind(this);   
+    this.shiftArrayByCase = this.shiftArrayByCase.bind(this);
+    this.shiftArrayNightmare = this.shiftArrayNightmare.bind(this);
   }
 
   componentDidMount() {    
@@ -43,7 +46,9 @@ class CardPiece extends React.Component {
     const card1 = openedPair[0];
     const card2 = openedPair[1];
     card1.classList.remove('unmatched')  
+    card1.classList.add('matched')  
     card2.classList.remove('unmatched')  
+    card2.classList.add('matched')  
   }
 
   isEven(number) {
@@ -53,6 +58,11 @@ class CardPiece extends React.Component {
   shiftArrayToLeft(arr, steps) {    
     arr = arr.concat(arr.splice(0, steps)); 
     return arr;    
+  }
+
+  shiftArrayToRight(arr, steps) {     
+    arr = arr.concat(arr.splice(0, arr.length - steps)); 
+    return arr;
   }
 
   changeCardsPosition() {
@@ -66,7 +76,14 @@ class CardPiece extends React.Component {
         unmatchedSlots.push(slot);
       }      
     }
-    children = this.shiftArrayToLeft(children, 2);
+
+    if (this.props.gameLevel.level === 'Nightmare') {
+      children = this.shiftArrayNightmare(children);
+    }
+    else {
+      children = this.shiftArrayByCase(children, this.props.gameLevel.shiftCase);
+    }
+
     for (let i = 0; i < unmatchedSlots.length; i++) {   
       const slot = unmatchedSlots[i];      
       const firstChild = slot.firstChild;     
@@ -77,6 +94,32 @@ class CardPiece extends React.Component {
     }     
   }
 
+  shiftArrayByCase(arr, shiftCase) {
+    switch (shiftCase) {
+      case 1: 
+        arr = this.shiftArrayToLeft(arr, 2);
+        return arr;
+      case 2:
+        arr = this.shiftArrayToRight(arr, 2);
+        return arr;      
+      default:
+        return arr;
+    }
+  }
+
+  shiftArrayNightmare(arr) {       
+    let toggle = this.props.gameLevel.toggle;
+    if ((this.props.moveCount + 2) % 10 === 0) {
+      this.props.toggleShiftMode(toggle);
+    }
+    if (toggle) {
+      arr = this.shiftArrayToRight(arr, 2);
+    } else {
+      arr = this.shiftArrayToLeft(arr, 2);
+    }        
+    return arr;
+  }
+
   flipCardUp() {
     const cardPiece = document.querySelector(`#piece-${this.props.id}`);  
     if (cardPiece.classList.contains('unmatched') && !this.props.isWaiting) {      
@@ -85,7 +128,10 @@ class CardPiece extends React.Component {
         this.props.increaseMoveCount(this.props.moveCount)           
         if (this.isEven(this.props.moveCount+1)) {
           if(this.isPairMatching()) {
-            this.props.increaseMatchedPairCount(this.props.matchedPairs)
+            if (this.props.gameLevel.level === 'Nightmare') {
+              this.props.resetUnsuccessfulMoveCount();
+            }
+            this.props.alterMatchedPairCount(this.props.matchedPairs, 1);            
             this.disableFlip();            
             if (this.checkWiningCondition()) {
               const winningInfo = {
@@ -97,13 +143,29 @@ class CardPiece extends React.Component {
               this.updateWinningInfo(winningInfo);
             }            
           }
-          else {
+          else {            
+            if (this.props.gameLevel.level === 'Nightmare') {              
+              this.props.increaseUnsuccessfulMoveCount(this.props.gameLevel.unsuccessfulMoves)
+              console.log(this.props.gameLevel.unsuccessfulMoves + 2);              
+            }            
             this.props.setWait(true);
             setTimeout(() => this.flipCardsDown(), 1000);           
           }          
-          if (this.props.gameLevel.level === 'Hard') {
+          if (this.props.gameLevel.level === 'Hard' || this.props.gameLevel.level === 'Nightmare') {            
             setTimeout(() => this.changeCardsPosition(), 1001);
-          }          
+          }
+          if (this.props.gameLevel.level === 'Nightmare' &&
+            (this.props.gameLevel.unsuccessfulMoves + 2) >= 12 && 
+            (this.props.gameLevel.unsuccessfulMoves + 2 - 12) % 4 === 0) {              
+            const matchedCards = [...document.getElementsByClassName('flip-up matched')];     
+            if (matchedCards.length > 1 ) {
+              this.props.alterMatchedPairCount(this.props.matchedPairs, -1); 
+              this.flipMatchedCardsDown(matchedCards);
+            }            
+            else {
+              this.props.resetUnsuccessfulMoveCount();
+            }
+          }                    
         }        
       }
     }           
@@ -119,6 +181,16 @@ class CardPiece extends React.Component {
       }
     }    
     this.props.setWait(false);   
+  }
+
+  flipMatchedCardsDown(matchedCards) {
+    const firstCard = matchedCards[0];
+    matchedCards.splice(0, 1);
+    const secondCard = matchedCards.find(card => card.getAttribute("name") === firstCard.getAttribute("name"))
+    firstCard.classList.remove('matched', 'flip-up')
+    firstCard.classList.add('unmatched')
+    secondCard.classList.remove('matched', 'flip-up')
+    secondCard.classList.add('unmatched')
   }
 
   checkWiningCondition() {
@@ -162,10 +234,10 @@ const mapStateToProps = state => ({
   matchedPairs: state.card.matchedPairs,
   isWaiting: state.card.isWaiting,
   gameLevel: state.card.gameLevel,
-  winningInfo: state.card.winningInfo
+  winningInfo: state.card.winningInfo,  
 })
 
 export default connect(mapStateToProps, { 
-  increaseMoveCount, increaseMatchedPairCount, setWait, broadcastWinning,
-  setWinningInfo 
+  increaseMoveCount, alterMatchedPairCount, setWait, broadcastWinning,
+  setWinningInfo, toggleShiftMode, increaseUnsuccessfulMoveCount, resetUnsuccessfulMoveCount
 })(CardPiece);

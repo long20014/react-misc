@@ -4,30 +4,44 @@ const initialState = {
   isWaiting: false,
   isWin: false,
   gameLevel: {
-    level: 'Hard',    
-    arraySize: 4
+    level: 'Hard',
+    arraySize: 4,
+    shiftCase: getRandomInt(2)
   },
   winningInfo: []
 }
 
-const changeLevel = (level) => {
-  switch (level) {   
+function changeLevel(level) {
+  switch (level) {
     case 'Normal':
       return {
-        level,        
+        level,
         arraySize: 4
       }
     case 'Hard':
       return {
-        level,        
-        arraySize: 4
+        level,
+        arraySize: 4,
+        shiftCase: getRandomInt(2),        
+      }
+    case 'Nightmare':
+      return {
+        level,
+        arraySize: 4,
+        toggle: false,
+        unsuccessfulMoves: 0
       }
     default:
       return {
-        level: 'Normal',        
+        level: 'Normal',
         arraySize: 4
       }
   }
+}
+
+function getRandomInt(max) {
+  const result = Math.floor(Math.random() * Math.floor(max)) + 1;
+  return result;
 }
 
 export default function (state = initialState, action) {
@@ -57,7 +71,7 @@ export default function (state = initialState, action) {
         ...state,
         isWaiting: action.isWaiting
       };
-    case 'increaseMatchedPairCount':
+    case 'alterMatchedPairCount':
       return {
         ...state,
         matchedPairs: action.matchedPairs
@@ -74,6 +88,26 @@ export default function (state = initialState, action) {
         ...state,
         winningInfo: action.winningInfo
       };
+    case 'toggleShiftMode':
+      return {
+        ...state,
+        gameLevel: {
+          level: state.gameLevel.level,
+          arraySize: state.gameLevel.arraySize,
+          toggle: action.toggle,
+          unsuccessfulMoves: state.gameLevel.unsuccessfulMoves
+        }
+      };
+    case 'alterUnsuccessfulMoveCount':
+      return {
+        ...state,
+        gameLevel: {
+          level: state.gameLevel.level,
+          arraySize: state.gameLevel.arraySize,
+          toggle: state.gameLevel.toggle,
+          unsuccessfulMoves: action.unsuccessfulMoves
+        }
+      };    
     default:
       return state;
   }

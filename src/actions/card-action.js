@@ -14,31 +14,49 @@ export function fetchScores() {
   }
 }
 
-export  function saveScores(score) {
+export function saveScores(score) {
   return {
     type: 'saveScores',
     winningInfo: score
   }  
 }
 
+export function increaseUnsuccessfulMoveCount(currentUnsuccessfulMoveCount) {
+  return function(dispatch) {        
+    dispatch({
+      type: 'alterUnsuccessfulMoveCount',
+      unsuccessfulMoves: increaseCount(currentUnsuccessfulMoveCount, 2),      
+    })
+  }
+}
+
+export function resetUnsuccessfulMoveCount() {
+  return function(dispatch) {        
+    dispatch({
+      type: 'alterUnsuccessfulMoveCount',
+      unsuccessfulMoves: 0,      
+    })
+  }
+}
 
 export function increaseMoveCount(currentMoveCount) {
   return function(dispatch) {        
     dispatch({
       type: 'increaseMoveCount',
-      moveCount: increaseCount(currentMoveCount),      
+      moveCount: increaseCount(currentMoveCount, 1),      
     })
   }
 }
 
-export function increaseMatchedPairCount(currentMatchedPairs) {
+export function alterMatchedPairCount(currentMatchedPairs, amount) {
   return function(dispatch) {        
     dispatch({
-      type: 'increaseMatchedPairCount',
-      matchedPairs: increaseCount(currentMatchedPairs),      
+      type: 'alterMatchedPairCount',
+      matchedPairs: increaseCount(currentMatchedPairs, amount),      
     })
   }
 }
+
 
 export function setWait(isWaiting) {
   return function(dispatch) {        
@@ -87,6 +105,13 @@ export function setWinningInfo(info) {
   }
 }
 
-function increaseCount(count) {
-  return ++count;
+export  function toggleShiftMode(toggle) {  
+  return {
+    type: 'toggleShiftMode',
+    toggle: !toggle
+  }  
+}
+
+function increaseCount(count, amount) {  
+  return count + amount;
 }

@@ -19,6 +19,7 @@ class CardSetting extends React.Component {
             <select name="level" id="level" onChange={this.change} value={this.props.level}>              
               <option value="Normal">Normal</option>
               <option value="Hard">Hard</option>
+              <option value="Nightmare">Nightmare</option>
             </select> 
           </div>
                    
