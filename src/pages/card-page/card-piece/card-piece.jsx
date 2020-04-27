@@ -145,8 +145,7 @@ class CardPiece extends React.Component {
           }
           else {            
             if (this.props.gameLevel.level === 'Nightmare') {              
-              this.props.increaseUnsuccessfulMoveCount(this.props.gameLevel.unsuccessfulMoves)
-              console.log(this.props.gameLevel.unsuccessfulMoves + 2);              
+              this.props.increaseUnsuccessfulMoveCount(this.props.gameLevel.unsuccessfulMoves)              
             }            
             this.props.setWait(true);
             setTimeout(() => this.flipCardsDown(), 1000);           
