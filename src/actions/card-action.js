@@ -96,20 +96,19 @@ export function changeGameLevel(level) {
   }
 }
 
-export function setWinningInfo(info) {  
-  return function(dispatch) {    
-    dispatch({
-      type: 'setWinningInfo',
-      winningInfo: info
-    })
-  }
-}
-
-export  function toggleShiftMode(toggle) {  
+export function toggleShiftMode(toggle) {  
   return {
     type: 'toggleShiftMode',
     toggle: !toggle
   }  
+}
+
+export function setCurrentWinningInfo(currentWinningInfo) {
+
+  return {
+    type: 'setCurrentWinningInfo',
+    currentWinningInfo
+  }
 }
 
 function increaseCount(count, amount) {  

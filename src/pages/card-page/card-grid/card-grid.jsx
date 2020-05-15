@@ -7,9 +7,11 @@ import constants from 'shared/constants';
 import * as _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { broadcastWinning, restartGame, setWinningInfo } from 'actions/card-action';
+import { broadcastWinning, restartGame, setCurrentWinningInfo } from 'actions/card-action';
 import GridService from 'services/grid.service';
 import CardGridService from 'services/card-grid.service';
+import Popup from "reactjs-popup";
+import FormSaveName from 'components/form-save-name/form-save-name';
 
 const gridService = GridService();
 const cardGridService = CardGridService();
@@ -57,11 +59,14 @@ class CardGrid extends React.Component {
       playerName: 'Unknown player',
       level: this.props.gameLevel.level
     }
-    this.props.setWinningInfo(winningInfo)
+    this.props.setCurrentWinningInfo(winningInfo)
   }  
 
   constructor(props) {
     super(props);    
+    this.state = {
+      open: false
+    }
     this.getMoveCount = this.getMoveCount.bind(this);
     this.getMatchedPairs = this.getMatchedPairs.bind(this);
     this.gameSettings = {
@@ -126,6 +131,14 @@ class CardGrid extends React.Component {
           label="Matches"
           updateCount={this.getMatchedPairs} 
           count={this.props.matchedPairs}/> 
+        <Popup modal  
+          open={this.state.open}
+          closeOnDocumentClick
+          onClose={this.closeModal}
+        >
+          <button onClick={this.closeModal}>Close</button>
+          <FormSaveName />
+        </Popup>
       </div>
     );
   }  
@@ -134,7 +147,7 @@ class CardGrid extends React.Component {
 CardGrid.propsType = {
   broadcastWinning: PropTypes.func.isRequired,
   restartGame: PropTypes.func.isRequired,
-  setWinningInfo: PropTypes.func.isRequired
+  setCurrentWinningInfo: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -145,4 +158,4 @@ const mapStateToProps = state => ({
   matchedPairs: state.card.matchedPairs
 })
 
-export default connect(mapStateToProps, { broadcastWinning, restartGame, setWinningInfo: setWinningInfo })(CardGrid);
+export default connect(mapStateToProps, { broadcastWinning, restartGame, setCurrentWinningInfo: setCurrentWinningInfo })(CardGrid);

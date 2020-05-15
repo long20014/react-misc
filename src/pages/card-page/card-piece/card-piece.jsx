@@ -3,7 +3,7 @@ import './card-piece.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { alterMatchedPairCount, setWait, increaseMoveCount, 
-  broadcastWinning, setWinningInfo, toggleShiftMode, increaseUnsuccessfulMoveCount,
+  broadcastWinning, toggleShiftMode, increaseUnsuccessfulMoveCount,
   resetUnsuccessfulMoveCount } 
   from 'actions/card-action';
 import cardService from 'services/card.service';
@@ -12,7 +12,6 @@ class CardPiece extends React.Component {
   constructor(props) {
     super()    
     this.flipCardUp = this.flipCardUp.bind(this); 
-    this.setWinningInfo = this.setWinningInfo.bind(this);
     this.checkWiningCondition = this.checkWiningCondition.bind(this);   
     this.announceWinning = this.announceWinning.bind(this);   
     this.shiftArrayByCase = this.shiftArrayByCase.bind(this);
@@ -23,12 +22,9 @@ class CardPiece extends React.Component {
    
   }
 
-  setWinningInfo(winningInfo) {          
-    this.props.setWinningInfo(winningInfo)
-  }
-
   updateWinningInfo(winningInfo) {
-    cardService.updateWinningInfo(winningInfo);
+    console.log(this.props.winningInfo);    
+    // cardService.updateWinningInfo(winningInfo);
   }
 
   isPairMatching() { 
@@ -127,6 +123,7 @@ class CardPiece extends React.Component {
         cardPiece.classList.add('flip-up');
         this.props.increaseMoveCount(this.props.moveCount)           
         if (this.isEven(this.props.moveCount+1)) {
+          this.updateWinningInfo({});
           if(this.isPairMatching()) {
             if (this.props.gameLevel.level === 'Nightmare') {
               this.props.resetUnsuccessfulMoveCount();
@@ -238,5 +235,5 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { 
   increaseMoveCount, alterMatchedPairCount, setWait, broadcastWinning,
-  setWinningInfo, toggleShiftMode, increaseUnsuccessfulMoveCount, resetUnsuccessfulMoveCount
+  toggleShiftMode, increaseUnsuccessfulMoveCount, resetUnsuccessfulMoveCount
 })(CardPiece);

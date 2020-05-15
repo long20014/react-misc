@@ -8,7 +8,8 @@ const initialState = {
     arraySize: 4,
     shiftCase: getRandomInt(2)
   },
-  winningInfo: []
+  winningInfo: [],
+  currentWinningInfo: {}
 }
 
 function changeLevel(level) {
@@ -55,12 +56,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         gameLevel: changeLevel(action.level)
-      };
-    case 'setWinningInfo':
-      return {
-        ...state,
-        winningInfo: [...state.winningInfo, action.winningInfo]
-      };
+      };    
     case 'increaseMoveCount':
       return {
         ...state,
@@ -107,7 +103,12 @@ export default function (state = initialState, action) {
           toggle: state.gameLevel.toggle,
           unsuccessfulMoves: action.unsuccessfulMoves
         }
-      };    
+      };
+    case 'setCurrentWinningInfo': 
+      return {
+        ...state,
+        currentWinningInfo: action.currentWinningInfo
+      }    
     default:
       return state;
   }
