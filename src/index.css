@@ -22,3 +22,15 @@ code {
 .w-full {
   width: 100%;
 }
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.underline {
+  text-decoration: underline;
+}

@@ -57,7 +57,6 @@ export function alterMatchedPairCount(currentMatchedPairs, amount) {
   }
 }
 
-
 export function setWait(isWaiting) {
   return function(dispatch) {        
     dispatch({

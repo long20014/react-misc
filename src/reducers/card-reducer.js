@@ -72,6 +72,8 @@ export default function (state = initialState, action) {
         isWaiting: action.isWaiting
       };
     case 'alterMatchedPairCount':
+      console.log('pair count');
+      
       return {
         ...state,
         matchedPairs: action.matchedPairs

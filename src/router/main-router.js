@@ -3,7 +3,6 @@ import { requireLogin } from 'router/guards';
 import { GuardProvider } from 'react-router-guards';
 import history from 'services/history.service';
 import { Switch } from 'react-router-dom';
-import { Router } from "react-router";
 import { HashRouter } from 'react-router-dom';
 import Nav from 'components/nav/nav';
 import PuzzlePageRoute from 'pages/puzzle-page/puzzle-page-route'
@@ -11,6 +10,7 @@ import HomePageRoute from 'pages/home-page/home-page-route'
 import ClockPageRoute from 'pages/clock-page/clock-page-route'
 import LoginPageRoute from 'pages/login-page/login-page-route';
 import CardPageRoute from 'pages/card-page/card-page-route';
+import ComponentGeneratorPageRoute from 'pages/component-generator-page/component-generator-page-route';
 
 const GLOBAL_GUARDS = [requireLogin];
 const MainRouter = () => {
@@ -24,6 +24,8 @@ const MainRouter = () => {
           {PuzzlePageRoute()}
           {CardPageRoute()}
           {LoginPageRoute()}
+          {LoginPageRoute()}
+          {ComponentGeneratorPageRoute()}
         </Switch>
       </GuardProvider>          
     </HashRouter>

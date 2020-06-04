@@ -1,0 +1,11 @@
+.setting-area {
+  display: flex;
+  justify-content: center;
+  width: 20vw;
+  min-width: 300px;
+  height: 100vh;
+  background: #e3e3e3;
+  flex-flow: column wrap;  
+  align-items: center;
+  justify-content: flex-start;
+}

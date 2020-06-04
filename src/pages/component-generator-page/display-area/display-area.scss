@@ -1,0 +1,10 @@
+.display-area {
+  display: flex;
+  justify-content: center; 
+  flex: 1;
+  height: 100vh;
+  background: white;
+  flex-flow: column wrap;  
+  align-items: center;
+  justify-content: flex-start;
+}
