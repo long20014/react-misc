@@ -1,8 +1,7 @@
 import React from 'react';
 import './setting-area.scss';
-import { changeStyle } from 'actions/component-generator-action';
+import { changeStyle, exportCode } from 'actions/component-generator-action';
 import { connect } from 'react-redux';
-import constants from 'shared/constants';
 import _ from 'lodash'; 
 class SettingArea extends React.Component {  
   constructor(props) {
@@ -14,6 +13,7 @@ class SettingArea extends React.Component {
 
   event = null;
   style = {}
+  options = ['height', 'width', 'border', 'border-radius', 'background'];
 
   changeStyle = _.debounce(() => {     
     const attr = this.event.target.id;
@@ -22,8 +22,6 @@ class SettingArea extends React.Component {
       this.style = Object.assign({}, this.style, {[attr]: value});   
       this.props.changeStyle(this.style);
     } 
-    console.log(this.style);
-    
   }, 500); 
 
   handleChange(event){
@@ -31,32 +29,52 @@ class SettingArea extends React.Component {
     this.event = event;     
     this.changeStyle();
   } 
+
+
  
 
   handleSubmit(event) {
-
+    this.props.exportCode(this.props.componentStyle, '');
   }
 
   render() {   
     return (      
       <div className="setting-area">
         <h1>setting-area</h1>
-        <div className="mt-10">  
-          <label htmlFor="height" className="mr-10">height</label>        
-          <input id="height" type="text" placeholder="height" onChange={this.handleChange}/>          
-        </div>
-        <div className="mt-10">    
-          <label htmlFor="width" className="mr-10">width</label>             
-          <input id="width" type="text" placeholder="width" onChange={this.handleChange}/>          
-        </div>        
+        <form action="" onSubmit={this.handleSubmit}>
+          {this.options.map(option => {
+            return(
+              <div className="mt-10">             
+                <label htmlFor={option} className="mr-10">{option}</label>        
+                <input id={option} type="text" placeholder={option} onChange={this.handleChange}/>          
+              </div>
+            )
+          })} 
+{/*           
+          <div className="mt-10">    
+            <label htmlFor="width" className="mr-10">width</label>             
+            <input id="width" type="text" placeholder="width" onChange={this.handleChange}/>          
+          </div> 
+          <div className="mt-10">    
+            <label htmlFor="border" className="mr-10">border</label>             
+            <input id="border" type="text" placeholder="border" onChange={this.handleChange}/>          
+          </div>
+          <div className="mt-10">    
+            <label htmlFor="border" className="mr-10">background</label>             
+            <input id="border" type="text" placeholder="border" onChange={this.handleChange}/>          
+          </div>  */}
+          <div className="mt-10">
+            <button type="submit">Create code</button> 
+          </div>     
+        </form>
       </div>  
     );
   }  
 }
 
 const mapStateToProps = state => ({
-  componentStyle: state.componentGenerator,
+  componentStyle: state.componentGenerator.componentStyle,
   label: state.componentGenerator.label
 })
 
-export default connect(mapStateToProps, {changeStyle})(SettingArea);
+export default connect(mapStateToProps, {changeStyle, exportCode})(SettingArea);

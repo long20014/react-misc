@@ -1,6 +1,5 @@
 .code-area {
-  display: flex;
-  justify-content: center;
+  display: flex;  
   width: 20vw;
   min-width: 300px;
   height: 100vh;
@@ -9,4 +8,5 @@
   flex-flow: column wrap;  
   align-items: center;
   justify-content: flex-start;
+  overflow: hidden;
 }

@@ -3,16 +3,30 @@ const initialState = {
     width: "auto",
     height: "auto"   
   },
-  label: "component A"
+  label: "component A",
+  code: {
+    html: ``,
+    css: 
+`{
+  width: auto;
+  height: auto;
+}
+`
+  }
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case "changeStyle":
-      console.log('changeStyle');
+    case "changeStyle":      
       return {
         ...state,
         componentStyle: action.componentStyle
+      }
+    case "exportCode":
+      console.log(action.code);      
+      return {
+        ...state,
+        code: action.code
       }
     default:
       return state;
