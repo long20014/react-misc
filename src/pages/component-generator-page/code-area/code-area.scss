@@ -9,4 +9,8 @@
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
+  textarea {
+    resize: none;
+  }
 }
+

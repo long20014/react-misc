@@ -34,9 +34,9 @@ class Nav extends React.Component {
               <Link to="/puzzle">Puzzle</Link>
             </li>           
             <li>
-            <div class="dropdown">  
+            <div className="dropdown">  
               <span className="underline">More</span>            
-              <div class="dropdown-content">
+              <div className="dropdown-content">
                 <div className="mt-10">
                   <Link to="/card">Card</Link>
                 </div>

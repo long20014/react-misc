@@ -34,3 +34,15 @@ code {
 .underline {
   text-decoration: underline;
 }
+
+.dflex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}

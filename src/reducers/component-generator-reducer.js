@@ -1,18 +1,18 @@
+import { availableComponents } from 'pages/component-generator-page/constants';
+
 const initialState = {
+  label: 'component A',
+  options: ['height', 'width', 'border', 'border-radius', 'background'],
+  components: availableComponents,
   componentStyle: {
-    width: "auto",
-    height: "auto"   
-  },
-  label: "component A",
+    width: 'auto',
+    height: 'auto'   
+  },  
+  componentHtml: '',
   code: {
-    html: ``,
-    css: 
-`{
-  width: auto;
-  height: auto;
-}
-`
-  }
+    html: '',
+    css: ''
+  },
 }
 
 export default function (state = initialState, action) {
@@ -22,12 +22,22 @@ export default function (state = initialState, action) {
         ...state,
         componentStyle: action.componentStyle
       }
-    case "exportCode":
-      console.log(action.code);      
+    case "changeHtml":      
       return {
         ...state,
-        code: action.code
+        componentHtml: action.componentHtml
       }
+    case "exportCode":          
+      return {
+        ...state,
+        code: action.code,
+        isCodeExporting: action.isCodeExporting
+      }    
+    case "addOption":     
+      return {
+        ...state,
+        options: action.options
+      }    
     default:
       return state;
   }
