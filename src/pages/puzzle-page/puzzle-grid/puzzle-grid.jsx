@@ -13,11 +13,16 @@ import GridService from 'services/grid.service';
 const gridService = GridService();
 
 const gridSlotSize = (gridSize) => {
-  let width = 160
-  let height = 160
+  let width = window.innerWidth <= 540 ? 90 : 160;
+  let height = window.innerWidth <= 540 ? 90 : 160;
   if (gridSize.width > 3 || gridSize.height > 3) {
-    width = 120
-    height = 120 
+    if (window.innerWidth <= 540) {
+      width = 70;
+      height = 70; 
+    } else {
+      width = 120;
+      height = 120; 
+    }    
   }
   return {
     width,
