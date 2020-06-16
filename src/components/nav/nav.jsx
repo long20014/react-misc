@@ -22,31 +22,34 @@ class Nav extends React.Component {
     return (
       <div className="component-wrapper">
         <div className="nav">
-          <h3>Logo</h3>
-          <ul className="nav-links">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/clock">Clock</Link>
-            </li>
-            <li>
-              <Link to="/puzzle">Puzzle</Link>
-            </li>           
-            <li>
-            <div className="dropdown">  
-              <span className="underline">More</span>            
-              <div className="dropdown-content">
-                <div className="mt-10">
-                  <Link to="/card">Card</Link>
-                </div>
-                <div className="mt-10">
-                  <Link to="/component-generator">Component generator</Link>
+          <div className="logo-wrapper">
+            <h3>Logo</h3>
+          </div> 
+          <div className="nav-links-wrapper">
+            <ul className="nav-links">
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/clock">Clock</Link>
+              </li>
+              <li>
+                <Link to="/puzzle">Puzzle</Link>
+              </li>           
+              <li>
+              <div className="dropdown">  
+                <span className="underline">More</span>            
+                <div className="dropdown-content">
+                  <div className="mt-10">
+                    <Link to="/card">Card</Link>
+                  </div>
+                  <div className="mt-10">
+                    <Link to="/component-generator">Component generator</Link>
+                  </div>
                 </div>
               </div>
-            </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
             <div className="burger-dropdown">  
               <div className="burger"></div>            
               <div className="dropdown-content">
@@ -67,6 +70,7 @@ class Nav extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
           {isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}
         </div>
       </div>
