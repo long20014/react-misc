@@ -46,6 +46,30 @@
   margin-top: 10px;
 }
 
+@media screen and (max-width: 440px) {
+  .clock-wrapper {    
+    height: 300px;
+    width: 300px;
+  }
+  
+  .clock {    
+    height: 300px;
+    width: 300px;   
+  }
+
+  .hour-hand {     
+    width: 100px;    
+  }
+  
+  .minute-hand {       
+    width: 120px;   
+  }
+  
+  .second-hand {      
+    width: 120px;    
+  }
+}
+
 // @mixin getTime($hour, $minute, $second) {
 //   @keyframes hour-hand-rotate {
 //     from {

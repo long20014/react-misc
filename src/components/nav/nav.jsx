@@ -49,6 +49,7 @@ class Nav extends React.Component {
                 </div>
               </div>
               </li>
+              <li>{isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}</li>
             </ul>
             <div className="burger-dropdown">  
               <div className="burger"></div>            
@@ -68,10 +69,13 @@ class Nav extends React.Component {
                 <div className="mt-10">
                   <Link to="/component-generator">Component generator</Link>
                 </div>
+                <div className="mt-10">
+                  {isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}
+                </div>
               </div>
             </div>
           </div>
-          {isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}
+          
         </div>
       </div>
     );
