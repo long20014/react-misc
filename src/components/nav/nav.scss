@@ -21,6 +21,11 @@
   display: inline-block;
 }
 
+.burger-dropdown {
+  position: relative;
+  display: none;
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -32,5 +37,47 @@
 }
 
 .dropdown:hover .dropdown-content {
-  display: block;
+  display: block;  
+}
+
+@media screen and (max-width: 640px) {
+  .nav-links {
+    display: none;
+  }
+
+  .burger-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .burger-dropdown:hover .dropdown-content {
+    display: block;
+    right: -80px;
+    top: 30px;
+  }
+}
+
+.burger {
+  position: relative;
+  width: 23px;
+  height: 2px;
+  background: white;
+}
+
+.burger:before {
+  position: absolute;
+  content: "";
+  width: 23px;
+  height: 2px;
+  background: white;
+  top: -5px;
+}
+
+.burger:after {
+  position: absolute;
+  content: "";
+  width: 23px;
+  height: 2px;
+  background: white;
+  bottom: -5px;  
 }
