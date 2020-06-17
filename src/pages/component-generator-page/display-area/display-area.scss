@@ -7,3 +7,9 @@
   align-items: center;
   justify-content: flex-start;
 }
+
+@media screen and (max-width: 768px) {
+  .display-area {
+    width: 100vw;
+  }
+}

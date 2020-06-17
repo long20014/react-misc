@@ -50,11 +50,7 @@ class SettingArea extends React.Component {
     return (          
       <div className="setting-area">
         <h1>setting-area</h1>       
-        <form onSubmit={this.exportCode}>
-          <div className="mt-10 setting-wrapper">             
-            <label htmlFor="add-option" className="mr-10">add option</label>        
-            <input id="add-option" type="text" placeholder="add-option" onKeyUp={this.addOption}/>          
-          </div>
+        <form onSubmit={this.exportCode}>          
           {this.props.options.map(option => {
             return(
               <div className="mt-10 setting-wrapper" key={option}>             
@@ -63,6 +59,10 @@ class SettingArea extends React.Component {
               </div>
             )
           })} 
+          <div className="mt-10 setting-wrapper">             
+            <label htmlFor="add-option" className="mr-10">add option</label>        
+            <input id="add-option" type="text" placeholder="add-option" onKeyUp={this.addOption}/>          
+          </div>
           <div className="mt-10">
             <button type="submit">Export code</button> 
           </div>     

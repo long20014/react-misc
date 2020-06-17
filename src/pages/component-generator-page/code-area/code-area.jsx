@@ -16,12 +16,14 @@ class CodeArea extends React.Component {
   render() {       
     return (
       <div className="code-area">
-        <h1>code-area</h1>
+        <div style={{width: "100%"}}>
+          <h1 className="text-center">code-area</h1>
+        </div>        
         <div>
           <h3 style={{marginTop: "0px"}}>Html</h3>
           <textarea name="html" id="css" cols="30" rows="12" value={this.props.code.html} onChange={this.handleChange}></textarea>
         </div>
-        <div>
+        <div style={{marginBottom: "20px"}}>
           <h3>Css</h3>
           <textarea name="css" id="css" cols="30" rows="12" value={this.props.code.css} onChange={this.handleChange}></textarea>
         </div>
