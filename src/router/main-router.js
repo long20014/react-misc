@@ -11,11 +11,12 @@ import ClockPageRoute from 'pages/clock-page/clock-page-route'
 import LoginPageRoute from 'pages/login-page/login-page-route';
 import CardPageRoute from 'pages/card-page/card-page-route';
 import ComponentGeneratorPageRoute from 'pages/component-generator-page/component-generator-page-route';
+import RpgRoute from 'pages/rpg-page/rpg-page-route';
 
 const GLOBAL_GUARDS = [requireLogin];
 const MainRouter = () => {
   return (
-    <HashRouter history={history}>
+    <HashRouter>
       <Nav />
       <GuardProvider guards={GLOBAL_GUARDS} loading="Loading..." >
         <Switch>
@@ -26,6 +27,7 @@ const MainRouter = () => {
           {LoginPageRoute()}
           {LoginPageRoute()}
           {ComponentGeneratorPageRoute()}
+          {RpgRoute()}
         </Switch>
       </GuardProvider>          
     </HashRouter>

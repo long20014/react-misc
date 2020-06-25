@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { logoutAction } from 'actions/auth-action';
-
+import { availableNavLinks, moreNavLinks, navLinks} from './navLinks';
+ 
 class Nav extends React.Component {
   constructor(props) {
     super(props);    
@@ -27,55 +28,39 @@ class Nav extends React.Component {
           </div> 
           <div className="nav-links-wrapper">
             <ul className="nav-links">
+              {availableNavLinks.map(link => 
+                <li key={link.path} >
+                  <Link to={link.path}>{link.label}</Link>
+                </li>
+              )}                         
               <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/clock">Clock</Link>
-              </li>
-              <li>
-                <Link to="/puzzle">Puzzle</Link>
-              </li>           
-              <li>
-              <div className="dropdown">  
-                <span className="underline">More</span>            
-                <div className="dropdown-content">
-                  <div className="mt-10">
-                    <Link to="/card">Card</Link>
-                  </div>
-                  <div className="mt-10">
-                    <Link to="/component-generator">Component generator</Link>
+                <div className="dropdown">  
+                  <span className="underline">More</span>            
+                  <div className="dropdown-content">
+                    {moreNavLinks.map(link => 
+                      <div key={link.path} className="mt-10">
+                        <Link to={link.path}>{link.label}</Link>
+                      </div>                     
+                    )}   
                   </div>
                 </div>
-              </div>
               </li>
               <li>{isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}</li>
             </ul>
             <div className="burger-dropdown">  
               <div className="burger"></div>            
               <div className="dropdown-content">
-                <div className="mt-10">
-                  <Link to="/">Home</Link>
-                </div>
-                <div className="mt-10">
-                  <Link to="/clock">Clock</Link>
-                </div>
-                <div className="mt-10">
-                  <Link to="/puzzle">Puzzle</Link>
-                </div>
-                <div className="mt-10">
-                  <Link to="/card">Card</Link>
-                </div>
-                <div className="mt-10">
-                  <Link to="/component-generator">Component generator</Link>
-                </div>
+                {navLinks.map(link => 
+                  <div key={link.path} className="mt-10">
+                    <Link to={link.path}>{link.label}</Link>
+                  </div>                     
+                )}                
                 <div className="mt-10">
                   {isLoggedIn && <button onClick={this.logout} style={{ color: 'black' }}>Log out</button>}
                 </div>
               </div>
             </div>
-          </div>
-          
+          </div>          
         </div>
       </div>
     );
