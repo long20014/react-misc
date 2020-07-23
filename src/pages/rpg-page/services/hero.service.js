@@ -16,10 +16,7 @@ const calculateAtk = (stats, heroClass, items = []) => {
   return atkFromItems + arkFromStats;   
 }
 
-
-
-
 export default {
   calculateHP,
-  calculateAtk
-} 
+  calculateAtk 
+}
