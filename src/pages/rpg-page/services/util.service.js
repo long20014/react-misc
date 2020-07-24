@@ -9,14 +9,14 @@ const getRandomInt = (min, max) => {
 }
 
 /** 
- * Function to replace variables in a string with list of replacements. 
+ * Function used to replace variables in a string with list of replacements. 
  * @str must follow this pattern: 'A string with {var1} and {var2} etc...'.
  * @replacements a list of replacements for each variable.
  */
 const insertVariablesToString = (str, replacements = []) => {
   if (replacements.length && replacements.length > 0) {
     let newStr = str;
-    const regex = RegExp('\{var[1-9]+\}', 'g');  
+    const regex = RegExp('\{var[0-9]+\}', 'g');  
     let target;
     let vars = new Set();
     while ((target = regex.exec(str)) != null) {
@@ -76,23 +76,23 @@ const addUniqueItemToArr = (arr, item) => {
  * @loop_end position when a loop will end
  * @do_steps number of loop steps continuously do
  * @skip_steps number of loop steps continuously skip
- * @callBack loop action
+ * @callBack loop action which can be injected the loop index; 
  */
-var skipLoop = function(loop_start, loop_end, do_steps, skip_steps, callBack){ 
-  var doSteps = 0;
-  var skipSteps = skip_steps;  
+const skipLoop = (loop_start, loop_end, do_steps, skip_steps, callBack) => { 
+  let doSteps = 0;
+  let skipSteps = skip_steps;  
   if (loop_start < 0 || loop_end < 1 || (loop_start > loop_end)) {
-    console.log('inputs are not suitable')
+    console.error('inputs are not valid');
+  }
+  else if (skip_steps === 0) {
+    for (let i = loop_start; i < loop_end; i++) {
+      callBack(i);
+    }
   }
   else {
-    for (var i = loop_start; i < loop_end; i++) {      
-      if (skip_steps === 0) {      
-        //TODO code here        
-        callBack(i);
-      }
-      else if (doSteps < do_steps)  {
-        doSteps++;      
-        //TODO code here
+    for (let i = loop_start; i < loop_end; i++) { 
+      if (doSteps < do_steps)  {
+        doSteps++; 
         callBack(i);
       }
       else if (doSteps === do_steps) {
