@@ -24,7 +24,7 @@ class Nav extends React.Component {
       <div className="component-wrapper">
         <div className="nav">
           <div className="logo-wrapper">
-            <h3>Logo</h3>
+            <img src="img/L - logo.png" width="45" height="45" alt=""/>
           </div> 
           <div className="nav-links-wrapper">
             <ul className="nav-links">

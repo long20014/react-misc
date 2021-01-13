@@ -53,7 +53,7 @@ export function refineArmor(armor, armorPrototype, option) {
     const desc = armorPrototype.options[option].description;
     const min = armorPrototype.options[option].stat.min;
     const max = armorPrototype.options[option].stat.max;
-    const newStat = utilService.getRandomArbitrary(min, max);
+    const newStat = utilService.getRandomArbitrary(min, max, 1);
     const description = utilService.insertVariablesToString(desc, [newStat+'%'])
     const tempObj = {};
     tempObj[option] = {

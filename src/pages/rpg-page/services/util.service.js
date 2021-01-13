@@ -1,7 +1,18 @@
-const getRandomArbitrary = (min, max) => {
-  return (Math.floor(Math.random() * 100) / 100 * (max - min)  + min).toFixed(1);
+/** 
+ * Function used to generate a random float number in a range. 
+ * @min min value.
+ * @max max value.
+ * @toFix quantity of decimal number
+ */
+const getRandomArbitrary = (min, max, toFix) => {
+  return (Math.floor(Math.random() * 100) / 100 * (max - min)  + min).toFixed(toFix);
 }
 
+/** 
+ * Function used to generate a random integer number in a range. 
+ * @min min value.
+ * @max max value.
+ */
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -108,10 +119,36 @@ const skipLoop = (loop_start, loop_end, do_steps, skip_steps, callBack) => {
   }  
 }
 
+/** 
+ * Function used to loop and do action at specific steps. 
+ * @loop_start position when a loop will start.
+ * @loop_end position when a loop will end
+ * @executeSteps specific steps that execute callback * 
+ * @callBack loop action which can be injected the loop index; 
+ */
+const jumpLoop = (loop_start, loop_end, executeSteps, callBack) => {
+  if (loop_start < 0 || loop_end < 1 || (loop_start > loop_end)) {
+    console.error('inputs are not valid');
+  }  
+  else {  
+    let exeSteps = new Set(executeSteps);
+    exeSteps = Array.from(exeSteps);    
+    exeSteps = exeSteps.sort((a,b) => a - b);
+    let stepIndex = 0;
+    for (let i = loop_start; i < loop_end; i++) {
+      if (i === exeSteps[stepIndex]) {        
+        callBack(i);
+        stepIndex++;
+      }      
+    }
+  }
+}
+
 export default { 
   getRandomArbitrary,
   getRandomInt,
   insertVariablesToString,
   addUniqueItemToArr,
-  skipLoop
+  skipLoop,
+  jumpLoop
 }
